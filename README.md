@@ -10,27 +10,24 @@ This project demonstrates the iterative development of a machine learning model 
 The project was built in three phases:
 
 ### 1. Baseline Model (Linear Network)
-Initially, I implemented a simple linear neural network to establish a baseline performance metric on the MNIST dataset. 
+At first I implemented a simple linear neural network to establish a baseline performance metric and it reached 98.85% accuracy on the validation dataset. 
 
 ### 2. Architectural Upgrade (CNN)
-To better capture the spatial hierarchies inherent in image data, I upgraded the architecture to a Convolutional Neural Network (CNN). This significantly improved validation accuracy over the baseline.
+To better capture the spatial hierarchies inherent in image data, I upgraded the architecture to a Convolutional Neural Network (CNN). This did improve validation accuracy over the baseline up to 99.4%
 
 ### 3. Engineering for Robustness (Data Augmentation)
 Even with the CNN, the model trained strictly on the standard MNIST dataset failed to generalize to real-world inputs drawn via the UI, particularly when digits were drawn off-center or at varying scales.
 
-To solve this, I used a simple PyTorch image transformation pipeline:
-* **Resizing & Scaling:** Specifically because the initial model consistently misclassified smallly drawn "0"s as "9"s.
-* **Random Translation:** This proved to also help when drawing numbers off center, since the MINST dataset numbers are always centered in the middle.
-* **Random Rotation:** This transformation is used to accommodate for rotated numbers, it's worth noting that this rotation should be small (eg. -5;5 degrees) since a "9" is also a "6" upside down.
+To solve this, I used a custom PyTorch image transformation pipeline:
+* **Resizing & Scaling:** Specifically added because the initial model consistently misclassified small "0"s as "9"s.
+* **Random Translation:** This proved to help when drawing numbers off-center, since the MNIST dataset numbers are always perfectly centered.
+* **Random Rotation:** Accommodates for naturally rotated handwriting. This rotation is kept small (-5 to 5 degrees) since a "9" rotated too far becomes a "6".
 
-While these data augmentations only improved the cnn_model's validation tests by 0.2% it improved the it's robustness and accuracy on live UI inputs.
-It has also made it prone
+While these data augmentations only improved the CNN model's validation accuracy by 0.2%, they drastically improved its robustness and accuracy on live UI inputs.
 
-##Development Process :
-
-Core Machine Learning: The neural network architectures, PyTorch training pipelines, and custom data augmentation transformations were developed independently.
-
-Visualization Interface: The interactive frontend UI was generated using Claude' Sonnet 4.6 visualize the model's performance.
+## Development Process
+* **Core Machine Learning:** The neural network architectures, PyTorch training pipelines, and custom data augmentation transformations were developed independently.
+* **Visualization Interface:** The interactive frontend UI was generated using Claude's Sonnet 4.6 to visualize the model's real-time performance.
 
 ## Training Results
 The CNN model was trained for 50 epochs. 
